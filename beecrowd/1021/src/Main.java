@@ -5,24 +5,26 @@ public class Main {
         Scanner tec = new Scanner(System.in);
 
         double valor = tec.nextDouble();
+        int valorCentavos = (int) Math.round(valor * 100);
+
+        System.out.println("Valor centavos: " + valorCentavos);
 
         int[] notas = {100, 50, 20, 10, 5, 2};
-        double[] moedas = {1, 0.50, 0.25, 0.10, 0.05, 0.01};
+        int[] moedas = {100, 50, 25, 10, 5, 1};
 
-        System.out.println("NOTAS: ");
+        System.out.println("NOTAS:");
         for (int nota : notas){
-            int quantidade = (int) (valor / nota);
-            System.out.println(quantidade + " nota(s) de R$ " + nota + ".00");
-            valor = valor % nota;
-            System.out.println("VALOR: " + valor);
+            int quantidade = valorCentavos / (nota * 100);
+            System.out.printf("%d nota(s) de R$ %.2f%n", quantidade, (double) nota);
+            valorCentavos = valorCentavos % (nota * 100);
         }
+        System.out.println("VALOR: " + valorCentavos);
 
-        System.out.println("MOEDAS: ");
-        for (double moeda : moedas) {
-            double valorDecimal = valor - Math.floor(valor);
-            int quantidade = (int) (valorDecimal / moeda);
-            System.out.printf("%d moeda(s) de R$ %.2f%n", quantidade, moeda );
-            valor = valorDecimal % moeda;
+        System.out.println("MOEDAS:");
+        for (int moeda : moedas) {
+            int quantidade = valorCentavos / moeda;
+            System.out.printf("%d moeda(s) de R$ %.2f%n", quantidade, moeda / 100.0);
+            valorCentavos  = valorCentavos % moeda;
         }
     }
 }
